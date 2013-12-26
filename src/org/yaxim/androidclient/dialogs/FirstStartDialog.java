@@ -52,6 +52,7 @@ public class FirstStartDialog extends AlertDialog implements DialogInterface.OnC
 		mEditJabberID = (EditText) group.findViewById(R.id.StartupDialog_JID_EditTextField);
 		mEditPassword = (EditText) group.findViewById(R.id.StartupDialog_PASSWD_EditTextField);
 		mCreateAccount = (CheckBox) group.findViewById(R.id.create_account);
+
 		mEditJabberID.addTextChangedListener(this);
 	}
 
