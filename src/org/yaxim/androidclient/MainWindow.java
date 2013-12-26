@@ -461,66 +461,69 @@ public class MainWindow extends SherlockExpandableListActivity {
     public boolean onContextItemSelected(MenuItem item) {
         return applyMenuContextChoice(item);
     }
-
+    
     private boolean applyMenuContextChoice(MenuItem item) {
-
-        ExpandableListContextMenuInfo contextMenuInfo = (ExpandableListContextMenuInfo) item
-            .getMenuInfo();
-        long packedPosition = contextMenuInfo.packedPosition;
-
-        if (isChild(packedPosition)) {
-
-            String userJid = getPackedItemRow(packedPosition, RosterConstants.JID);
-            String userName = getPackedItemRow(packedPosition, RosterConstants.ALIAS);
-            Log.d(TAG, "action for contact " + userName + "/" + userJid);
-
-            int itemID = item.getItemId();
-
-            switch (itemID) {
-            case R.id.roster_contextmenu_contact_open_chat:
-                startChatActivity(userJid, userName, null);
-                return true;
-
-            case R.id.roster_contextmenu_contact_delmsg:
-                removeChatHistoryDialog(userJid, userName);
-                return true;
-
-            case R.id.roster_contextmenu_contact_delete:
-                if (!isConnected()) { showToastNotification(R.string.Global_authenticate_first); return true; }
-                removeRosterItemDialog(userJid, userName);
-                return true;
-
-            case R.id.roster_contextmenu_contact_rename:
-                if (!isConnected()) { showToastNotification(R.string.Global_authenticate_first); return true; }
-                renameRosterItemDialog(userJid, userName);
-                return true;
-
-            case R.id.roster_contextmenu_contact_request_auth:
-                if (!isConnected()) { showToastNotification(R.string.Global_authenticate_first); return true; }
-                serviceAdapter.sendPresenceRequest(userJid, "subscribe");
-                return true;
-
-            case R.id.roster_contextmenu_contact_change_group:
-                if (!isConnected()) { showToastNotification(R.string.Global_authenticate_first); return true; }
-                moveRosterItemToGroupDialog(userJid);
-                return true;
-            }
-        } else {
-
-            int itemID = item.getItemId();
-            String seletedGroup = getPackedItemRow(packedPosition, RosterConstants.GROUP);
-            Log.d(TAG, "action for group " + seletedGroup);
-
-            switch (itemID) {
-            case R.id.roster_contextmenu_group_rename:
-                if (!isConnected()) { showToastNotification(R.string.Global_authenticate_first); return true; }
-                renameRosterGroupDialog(seletedGroup);
-                return true;
-
-            }
-        }
         return false;
     }
+    // private boolean applyMenuContextChoice(MenuItem item) {
+
+    //     ExpandableListContextMenuInfo contextMenuInfo = (ExpandableListContextMenuInfo) item
+    //         .getMenuInfo();
+    //     long packedPosition = contextMenuInfo.packedPosition;
+
+    //     if (isChild(packedPosition)) {
+
+    //         String userJid = getPackedItemRow(packedPosition, RosterConstants.JID);
+    //         String userName = getPackedItemRow(packedPosition, RosterConstants.ALIAS);
+    //         Log.d(TAG, "action for contact " + userName + "/" + userJid);
+
+    //         int itemID = item.getItemId();
+
+    //         switch (itemID) {
+    //         case R.id.roster_contextmenu_contact_open_chat:
+    //             startChatActivity(userJid, userName, null);
+    //             return true;
+
+    //         case R.id.roster_contextmenu_contact_delmsg:
+    //             removeChatHistoryDialog(userJid, userName);
+    //             return true;
+
+    //         case R.id.roster_contextmenu_contact_delete:
+    //             if (!isConnected()) { showToastNotification(R.string.Global_authenticate_first); return true; }
+    //             removeRosterItemDialog(userJid, userName);
+    //             return true;
+
+    //         case R.id.roster_contextmenu_contact_rename:
+    //             if (!isConnected()) { showToastNotification(R.string.Global_authenticate_first); return true; }
+    //             renameRosterItemDialog(userJid, userName);
+    //             return true;
+
+    //         case R.id.roster_contextmenu_contact_request_auth:
+    //             if (!isConnected()) { showToastNotification(R.string.Global_authenticate_first); return true; }
+    //             serviceAdapter.sendPresenceRequest(userJid, "subscribe");
+    //             return true;
+
+    //         case R.id.roster_contextmenu_contact_change_group:
+    //             if (!isConnected()) { showToastNotification(R.string.Global_authenticate_first); return true; }
+    //             moveRosterItemToGroupDialog(userJid);
+    //             return true;
+    //         }
+    //     } else {
+
+    //         int itemID = item.getItemId();
+    //         String seletedGroup = getPackedItemRow(packedPosition, RosterConstants.GROUP);
+    //         Log.d(TAG, "action for group " + seletedGroup);
+
+    //         switch (itemID) {
+    //         case R.id.roster_contextmenu_group_rename:
+    //             if (!isConnected()) { showToastNotification(R.string.Global_authenticate_first); return true; }
+    //             renameRosterGroupDialog(seletedGroup);
+    //             return true;
+
+    //         }
+    //     }
+    //     return false;
+    // }
 
     private boolean isChild(long packedPosition) {
         int type = ExpandableListView.getPackedPositionType(packedPosition);
@@ -681,37 +684,37 @@ public class MainWindow extends SherlockExpandableListActivity {
 
         int itemID = item.getItemId();
 
-        switch (itemID) {
-        case R.id.menu_connect:
+        if (itemID == R.id.menu_connect) {
             toggleConnection();
             return true;
 
-        case R.id.menu_add_friend:
+        } else if (itemID == R.id.menu_add_friend) {
             addToRosterDialog(null);
             return true;
 
-        case R.id.menu_show_hide:
+        } else if (itemID == R.id.menu_show_hide) {
             setOfflinceContactsVisibility(!mConfig.showOffline);
             updateRoster();
             return true;
 
-        case android.R.id.home:
-        case R.id.menu_status:
+        } else if (itemID == android.R.id.home) {
+            
+        } else if (itemID == R.id.menu_status) {
             new ChangeStatusDialog(this).show();
             return true;
 
-        case R.id.menu_exit:
+        } else if (itemID == R.id.menu_exit) {
             PreferenceManager.getDefaultSharedPreferences(this).edit().
                 putBoolean(PreferenceConstants.CONN_STARTUP, false).commit();
             stopService(xmppServiceIntent);
             finish();
             return true;
 
-        case R.id.menu_settings:
+        } else if (itemID == R.id.menu_settings) {
             startActivity(new Intent(this, MainPrefs.class));
             return true;
 
-        case R.id.menu_about:
+        } else if (itemID == R.id.menu_about) {
             aboutDialog();
             return true;
 

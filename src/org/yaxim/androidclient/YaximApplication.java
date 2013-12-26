@@ -32,7 +32,7 @@ public class YaximApplication extends Application {
 	}
 
 	public static YaximApplication getApp(Context ctx) {
-		return (YaximApplication)ctx.getApplicationContext();
+		nreturn (YaximApplication)ctx.getApplicationContext();
 	}
 
 	public static YaximConfiguration getConfig(Context ctx) {
