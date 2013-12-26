@@ -2,6 +2,7 @@ package org.yaxim.androidclient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 import org.yaxim.androidclient.XMPPRosterServiceAdapter;
 import org.yaxim.androidclient.exceptions.YaximXMPPAdressMalformedException;
@@ -106,7 +107,7 @@ public class MainWindow extends SherlockExpandableListActivity {
 
     private ContentObserver mRosterObserver = new RosterObserver();
     private ContentObserver mChatObserver = new ChatObserver();
-    private HashMap<String, Boolean> mGroupsExpanded = new HashMap<String, Boolean>();
+    public HashMap<String, Boolean> mGroupsExpanded = new HashMap<String, Boolean>();
 
     private ActionBar actionBar;
     private String mTheme;
@@ -890,7 +891,7 @@ public class MainWindow extends SherlockExpandableListActivity {
     public void storeExpandedState() {
         SharedPreferences.Editor prefedit = PreferenceManager
             .getDefaultSharedPreferences(this).edit();
-        for (HashMap.Entry<String, Boolean> item : mGroupsExpanded.entrySet()) {
+        for (Map.Entry<String, Boolean> item : mGroupsExpanded.entrySet()) {
             prefedit.putBoolean("expanded_" + item.getKey(), item.getValue());
         }
         prefedit.commit();
