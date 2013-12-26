@@ -191,7 +191,7 @@ public class SmackableImp implements Smackable {
 		// register MemorizingTrustManager for HTTPS
 		try {
 			SSLContext sc = SSLContext.getInstance("TLS");
-			sc.init(null, new X509TrustManager[] { YaximApplication.getApp(mService).mMTM },
+			sc.init(null, new X509TrustManager[] { YaximApplication.mMTM },
 					new java.security.SecureRandom());
 			this.mXMPPConfig.setCustomSSLContext(sc);
 		} catch (java.security.GeneralSecurityException e) {

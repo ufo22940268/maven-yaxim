@@ -16,9 +16,9 @@ public class YaximApplication extends Application {
 
 	// MTM is needed globally for both the backend (connect)
 	// and the frontend (display dialog)
-	public MemorizingTrustManager mMTM;
+	public static MemorizingTrustManager mMTM;
 
-	private YaximConfiguration mConfig;
+	public static YaximConfiguration mConfig;
 
 	public YaximApplication() {
 		super();
@@ -32,7 +32,7 @@ public class YaximApplication extends Application {
 	}
 
 	public static YaximApplication getApp(Context ctx) {
-		nreturn (YaximApplication)ctx.getApplicationContext();
+		return (YaximApplication)ctx.getApplicationContext();
 	}
 
 	public static YaximConfiguration getConfig(Context ctx) {
